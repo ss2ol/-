@@ -1,0 +1,70 @@
+use mysql;
+
+drop table ;
+
+-- 날씨 데이블
+create table record(
+record_id int primary key auto_increment,
+location_id int references location(location_id) on delete cascade,
+record_date Date,
+avg_temp double default 0,
+min_temp double default 0,
+max_temp double default 0,
+rain_hours double default 0,
+day_rain double default 0,
+max_insta_windspeed double default 0,
+max_windspeed double default 0,
+avg_windspeed double default 0,
+avg_humid double default 0,
+accuml_snow double default 0
+);
+
+
+
+select * from record;
+
+-- 지역테이블
+create table location(
+location_id int primary key,
+lacation_name varchar(10),
+lacation_state varchar(12)
+);
+
+select * from location;
+
+
+
+-- 경고테이블 
+create table warning(
+alert_id Int primary key,
+record_id int references record(record_id) on delete cascade,
+alert_wind Boolean default false,
+alert_rain Boolean default false,
+alert_snow Boolean default false,
+alert_cold Boolean default false,
+alert_hot Boolean default false,
+alert_dry Boolean default false,
+warn_wind Boolean default false,
+warn_rain Boolean default false,
+warn_snow Boolean default false,
+warn_cold Boolean default false,
+warn_hot Boolean default false,
+warn_dry Boolean default false
+);
+
+
+select * from warning;
+
+-- 멤버테이블
+create table weathermember(
+member_num int primary key,
+member_id varchar(20) not null unique,
+member_pw varchar(20) not null,
+member_email varchar(50)not null unique,
+signup_date Datetime default now(),
+info_modify_date Datetime default now(),
+nickname varchar(30) not null unique,
+group_id varchar(30)
+);
+
+select * from weathermember;
